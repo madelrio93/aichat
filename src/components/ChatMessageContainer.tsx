@@ -1,25 +1,34 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { getStreamAiResponse } from '../lib/api';
+import { useChatStore } from '../store/chatStore';
+import { ChatMessages } from './ChatMessages';
 import { SendMessageForm } from './SendMessageForm';
 
-type Message = {
-  id: number;
-  author: 'iam' | 'ia';
-  text: string;
-};
+export const ChatMessageContainer = ({}) => {
+  const { messages, addNewMessage } = useChatStore();
 
-export const ChatMessageContainer = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const getIaMessageResponse = async () => {
+    const reversedMessages = [...messages].reverse();
 
-  const addNewIamMessage = (message: string) => {
-    setMessages([
-      {
-        id: Date.now(),
-        author: 'iam',
-        text: message,
-      },
-      ...messages,
-    ]);
+    const response = await getStreamAiResponse({
+      messages: reversedMessages,
+    });
+
+    addNewMessage(response, 'system');
   };
+
+  useEffect(() => {
+    const lastMessage = messages[messages.length - 1];
+
+    console.log({ lastMessage });
+
+    if (!lastMessage) {
+      getIaMessageResponse();
+      return;
+    }
+
+    if (lastMessage.role === 'user') getIaMessageResponse();
+  }, [messages]);
 
   return (
     <div className="h-[528px] relative flex flex-col">
@@ -27,22 +36,9 @@ export const ChatMessageContainer = () => {
         <div className="text-white px-4 py-2 ">We are online!</div>
       </div>
 
-      <div className="px-4 pb-2 box-border flex-1 w-full flex flex-col-reverse gap-2 overflow-auto">
-        {messages.map(({ id, author, text }) => (
-          <div
-            key={id}
-            className={`flex justify-${author === 'ia' ? 'start' : 'end-safe'}`}
-          >
-            <div
-              className={`w-fit px-4 py-2 rounded-full ${author === 'ia' ? 'bg text-zinc-100' : 'bg-zinc-200 w-fit  text-zinc-800'}`}
-            >
-              {text}
-            </div>
-          </div>
-        ))}
-      </div>
+      <ChatMessages messages={messages} />
 
-      <SendMessageForm addMessage={addNewIamMessage} />
+      <SendMessageForm addUserMessage={addNewMessage} />
     </div>
   );
 };

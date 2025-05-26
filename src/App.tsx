@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { ChatButton } from './components/ChatButton';
 import { ChatContainer } from './components/ChatContainer';
+import { getStreamAiResponse } from './lib/api';
+import type { ChatMessage } from './types/openai';
+import { useChatStore } from './store/chatStore';
 
 function App() {
   const [showFirstMessage, setSetshowFirstMessage] = useState(false);
   const [notificationsCount, setNotificationsCount] = useState(0);
-  const [isChatOpened, setIsChatOpened] = useState(false);
 
   // useEffect(() => {
   //   const timeout = setTimeout(() => {
@@ -26,7 +28,7 @@ function App() {
   return (
     <main className="bg-[#f6f7fb] h-screen relative">
       <div className="m-auto w-[350px] absolute inset-0 mt-16">
-        <div className='mb-4'>
+        <div className="mb-4">
           <ChatContainer />
         </div>
 

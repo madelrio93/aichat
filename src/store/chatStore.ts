@@ -1,24 +1,24 @@
 import { create } from 'zustand';
-import type { ChatMessage } from '../types/openai';
+import type { ChatMessage, ChatRole } from '../types/openai';
 
 type ChatState = {
   isChatOpen?: boolean;
   messages: ChatMessage[];
-  addNewUserMessage: (text: string) => void;
+  addNewMessage: (text: string, role?: ChatRole) => void;
 };
 
 export const useChatStore = create<ChatState>((set) => ({
   isChatOpen: false,
   messages: [],
-  addNewUserMessage: (text: string) =>
+  addNewMessage: (text: string, role: ChatRole = 'system') =>
     set((state) => ({
       messages: [
+        ...state.messages,
         {
           createAt: Date.now(),
-          role: 'user',
+          role,
           content: text,
         },
-        ...state.messages,
       ],
     })),
 }));

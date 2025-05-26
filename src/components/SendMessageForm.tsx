@@ -1,12 +1,13 @@
 import { useRef, type FormEvent } from 'react';
 import { SendIcon } from '../assets/icons/SendIcon';
+import type { ChatRole } from '../types/openai';
 
 interface SendMessageFormProps {
-  addMessage: (message: string) => void;
+  addUserMessage: (message: string, role: ChatRole) => void;
 }
 
 export const SendMessageForm: React.FC<SendMessageFormProps> = ({
-  addMessage,
+  addUserMessage,
 }) => {
   const messageRef = useRef<HTMLInputElement>(null);
 
@@ -16,7 +17,7 @@ export const SendMessageForm: React.FC<SendMessageFormProps> = ({
     const message = messageRef.current?.value;
     if (!message) return;
 
-    addMessage(message);
+    addUserMessage(message, 'user');
 
     messageRef.current!.value = '';
   };
