@@ -10,7 +10,7 @@ export const ChatMessages: React.FC<ChatMessageProps> = ({ messages }) => {
       {[...messages].reverse().map(({ createAt, role, content }) => (
         <div
           key={createAt}
-          className={`flex justify-${role === 'system' ? 'start' : 'end'}`}
+          className={`flex ${role === 'system' ? 'start' : 'justify-end'} `}
         >
           <div
             className={`w-fit px-4 py-2 rounded-full ${role === 'system' ? 'bg text-zinc-100' : 'bg-zinc-200 w-fit  text-zinc-800'}`}

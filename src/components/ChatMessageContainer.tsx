@@ -20,8 +20,6 @@ export const ChatMessageContainer = ({}) => {
   useEffect(() => {
     const lastMessage = messages[messages.length - 1];
 
-    console.log({ lastMessage });
-
     if (!lastMessage) {
       getIaMessageResponse();
       return;
@@ -31,9 +29,9 @@ export const ChatMessageContainer = ({}) => {
   }, [messages]);
 
   return (
-    <div className="h-[528px] relative flex flex-col">
+    <div className="relative flex flex-col flex-1">
       <div className="bg">
-        <div className="text-white px-4 py-2 ">We are online!</div>
+        <div className="text-white px-4 pb-2 text-sm">We are online!</div>
       </div>
 
       <ChatMessages messages={messages} />

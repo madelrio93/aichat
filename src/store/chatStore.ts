@@ -4,12 +4,17 @@ import type { ChatMessage, ChatRole } from '../types/openai';
 type ChatState = {
   isChatOpen?: boolean;
   messages: ChatMessage[];
+  notificationsCount?: number;
+  firstMessagePannel?: boolean;
   addNewMessage: (text: string, role?: ChatRole) => void;
+  toogleChatMessageContainer: () => void;
+  setFirstMessagePannel: () => void;
 };
 
 export const useChatStore = create<ChatState>((set) => ({
   isChatOpen: false,
   messages: [],
+  firstMessagePannel: false,
   addNewMessage: (text: string, role: ChatRole = 'system') =>
     set((state) => ({
       messages: [
@@ -21,4 +26,8 @@ export const useChatStore = create<ChatState>((set) => ({
         },
       ],
     })),
+  toogleChatMessageContainer: () =>
+    set((state) => ({ isChatOpen: !state.isChatOpen })),
+  setFirstMessagePannel: () =>
+    set((state) => ({ firstMessagePannel: !state.firstMessagePannel })),
 }));

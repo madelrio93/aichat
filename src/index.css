@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+button {
+  cursor: pointer;
+}
+
 .bg {
   @apply bg-gradient-to-r from-indigo-500 to-blue-500;
 }
