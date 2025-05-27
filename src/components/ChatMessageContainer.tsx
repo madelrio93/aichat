@@ -4,17 +4,17 @@ import { useChatStore } from '../store/chatStore';
 import { ChatMessages } from './ChatMessages';
 import { SendMessageForm } from './SendMessageForm';
 
-export const ChatMessageContainer = ({}) => {
-  const { messages, addNewMessage } = useChatStore();
+export const ChatMessageContainer = () => {
+  const { messages, typingRole, addNewMessage, setTypingRole } = useChatStore();
 
   const getIaMessageResponse = async () => {
-    const reversedMessages = [...messages].reverse();
-
+    setTypingRole('system');
     const response = await getStreamAiResponse({
-      messages: reversedMessages,
+      messages,
     });
 
     addNewMessage(response, 'system');
+    setTypingRole(null);
   };
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export const ChatMessageContainer = ({}) => {
         <div className="text-white px-4 pb-2 text-sm">We are online!</div>
       </div>
 
-      <ChatMessages messages={messages} />
+      <ChatMessages messages={messages} typingRole={typingRole} />
 
       <SendMessageForm addUserMessage={addNewMessage} />
     </div>

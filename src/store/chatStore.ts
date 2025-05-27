@@ -6,9 +6,11 @@ type ChatState = {
   messages: ChatMessage[];
   notificationsCount?: number;
   firstMessagePannel?: boolean;
+  typingRole?: ChatRole | null;
   addNewMessage: (text: string, role?: ChatRole) => void;
   toogleChatMessageContainer: () => void;
   setFirstMessagePannel: () => void;
+  setTypingRole: (role: ChatRole | null) => void;
 };
 
 export const useChatStore = create<ChatState>((set) => ({
@@ -30,4 +32,5 @@ export const useChatStore = create<ChatState>((set) => ({
     set((state) => ({ isChatOpen: !state.isChatOpen })),
   setFirstMessagePannel: () =>
     set((state) => ({ firstMessagePannel: !state.firstMessagePannel })),
+  setTypingRole: (role) => set(() => ({ typingRole: role })),
 }));
