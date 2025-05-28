@@ -29,7 +29,7 @@ export const ChatMessageContainer = () => {
   }, [messages]);
 
   return (
-    <div className="relative flex flex-col flex-1">
+    <div className="relative flex flex-col flex-1 overflow-auto">
       <div className="bg">
         <div className="text-white px-4 pb-2 text-sm">We are online!</div>
       </div>
