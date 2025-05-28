@@ -4,7 +4,6 @@ import type { ChatMessage, ChatRole } from '../types/openai';
 type ChatState = {
   isChatOpen?: boolean;
   messages: ChatMessage[];
-  notificationsCount?: number;
   firstMessagePannel?: boolean;
   typingRole?: ChatRole | null;
   addNewMessage: (text: string, role?: ChatRole) => void;

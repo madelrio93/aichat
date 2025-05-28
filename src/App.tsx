@@ -7,7 +7,6 @@ function App() {
   const {
     isChatOpen,
     messages,
-    notificationsCount,
     firstMessagePannel,
     setFirstMessagePannel,
     toogleChatMessageContainer,
@@ -31,7 +30,7 @@ function App() {
   return (
     <main className="bg-[#f6f7fb]">
       <div className="absolute right-10 bottom-20 z-10">
-        <ChatButton notifications={notificationsCount} />
+        <ChatButton />
       </div>
 
       {isChatOpen && (
