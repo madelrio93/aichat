@@ -10,6 +10,7 @@ export const CloseIcon = (props: SVGProps<SVGSVGElement>) => {
       height="24"
       fill="none"
       viewBox="0 0 24 24"
+      {...props}
     >
       <path
         stroke="currentColor"
